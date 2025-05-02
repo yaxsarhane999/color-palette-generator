@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Color Palette Generator</title>
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <!-- Moroccan Pattern Background -->
+    <canvas id="moroccanPattern" class="moroccan-pattern"></canvas>
+
+    <!-- Header -->
+    <header>
+      <h1>Color Palette Generator</h1>
+      <div class="controls">
+        <div class="toggle-container">
+          <input type="checkbox" id="darkModeToggle" class="toggle-input">
+          <label for="darkModeToggle" class="toggle-label">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+          </label>
+        </div>
+        <div class="toggle-container">
+          <input type="checkbox" id="colorFormatToggle" class="toggle-input">
+          <label for="colorFormatToggle" class="toggle-label">HEX/RGB</label>
+        </div>
+      </div>
+    </header>
+
+    <!-- Color Palette -->
+    <div class="color-palette" id="colorPalette">
+      <!-- Color cards will be generated here -->
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button id="generateBtn" class="btn primary">
+        <i class="fas fa-sync-alt"></i> Generate New Palette
+      </button>
+      <button id="exportBtn" class="btn outline">
+        <i class="fas fa-download"></i> Export Options
+      </button>
+    </div>
+
+    <!-- Save Palette & Contrast Checker -->
+    <div class="two-column">
+      <div class="card">
+        <h2>Save This Palette</h2>
+        <div class="form-group">
+          <label for="paletteName">Palette Name</label>
+          <input type="text" id="paletteName" placeholder="My Awesome Palette">
+        </div>
+        <div class="form-group">
+          <label for="paletteTags">Tags (comma separated)</label>
+          <input type="text" id="paletteTags" placeholder="moroccan, warm, natural">
+        </div>
+        <button id="savePaletteBtn" class="btn full-width">
+          <i class="fas fa-save"></i> Save Palette
+        </button>
+      </div>
+
+      <div class="card">
+        <h2>Contrast Checker</h2>
+        <div id="contrastChecker" class="contrast-checker">
+          <div class="select-group">
+            <div>
+              <label for="bgColorSelect">Background Color</label>
+              <select id="bgColorSelect"></select>
+            </div>
+            <div>
+              <label for="textColorSelect">Text Color</label>
+              <select id="textColorSelect"></select>
+            </div>
+          </div>
+          <div id="previewText" class="preview-text">
+            <p class="preview-title">Sample Text</p>
+            <p>This is how your text will look on this background.</p>
+          </div>
+          <div class="contrast-results">
+            <p class="contrast-ratio">Contrast Ratio: <span id="contrastRatio">0</span>:1</p>
+            <div class="contrast-checks">
+              <div class="check-item">
+                <span id="checkAALarge" class="check-icon"></span>
+                <span>AA Large Text</span>
+              </div>
+              <div class="check-item">
+                <span id="checkAA" class="check-icon"></span>
+                <span>AA Normal Text</span>
+              </div>
+              <div class="check-item">
+                <span id="checkAAA" class="check-icon"></span>
+                <span>AAA Normal Text</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saved Palettes -->
+    <div class="saved-palettes-container">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="all">All Palettes</button>
+        <button class="tab-btn" data-tab="favorites">Favorites</button>
+      </div>
+      <div id="savedPalettes" class="saved-palettes">
+        <!-- Saved palettes will be displayed here -->
+      </div>
+    </div>
+
+    <!-- Author Footer -->
+    <footer class="author-footer">
+      <div class="author-card">
+        <div class="author-info">
+          <h2>Yassir SARHANE</h2>
+          <p class="author-title">Graphic Designer</p>
+          <div class="contact-info">
+            <p><span>📞</span> <a href="tel:+212774079856">+212 774 079 856</a></p>
+            <p><span>📧</span> <a href="mailto:yaxsarhane@gmail.com">yaxsarhane@gmail.com</a></p>
+            <p><span>🌐</span> <a href="http://sarhane.rf.gd/" target="_blank">http://sarhane.rf.gd/</a></p>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://web.facebook.com/yaxsarhane" target="_blank" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://instagram.com/yaxsarhane" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="https://www.youtube.com/@yaxsarhane" target="_blank" aria-label="YouTube">
+            <i class="fab fa-youtube"></i>
+          </a>
+          <a href="https://ma.linkedin.com/in/yaxsarhane" target="_blank" aria-label="LinkedIn">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=212774079856&text=Hello!" target="_blank" aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+          <a href="https://t.me/yaxsarhane" target="_blank" aria-label="Telegram">
+            <i class="fab fa-telegram-plane"></i>
+          </a>
+        </div>
+        <div class="copyright">
+          © <span id="currentYear"></span> Yassir SARHANE. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Export Options Modal -->
+  <div id="exportModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Export Options</h2>
+        <button id="closeExportModal" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="export-preview">
+          <h3>Preview</h3>
+          <div class="canvas-container">
+            <canvas id="exportCanvas"></canvas>
+          </div>
+          <button id="downloadPngBtn" class="btn outline">
+            <i class="fas fa-download"></i> Download PNG
+          </button>
+        </div>
+
+        <div class="export-tabs">
+          <div class="tabs">
+            <button class="tab-btn active" data-export-tab="css">CSS Variables</button>
+            <button class="tab-btn" data-export-tab="tailwind">Tailwind Config</button>
+            <button class="tab-btn" data-export-tab="scss">SCSS Variables</button>
+            <button class="tab-btn" data-export-tab="json">JSON</button>
+          </div>
+
+          <div class="export-tab-content active" data-export-content="css">
+            <div class="code-container">
+              <pre><code id="cssOutput"></code></pre>
+              <button class="copy-btn" data-copy="css">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="export-tab-content" data-export-content="tailwind">
+            <div class="code-container">
+              <pre><code id="tailwindOutput"></code></pre>
+              <button class="copy-btn" data-copy="tailwind">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="export-tab-content" data-export-content="scss">
+            <div class="code-container">
+              <pre><code id="scssOutput"></code></pre>
+              <button class="copy-btn" data-copy="scss">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+
+          <div class="export-tab-content" data-export-content="json">
+            <div class="code-container">
+              <pre><code id="jsonOutput"></code></pre>
+              <button class="copy-btn" data-copy="json">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <div class="toast-content">
+      <div class="toast-title">Success</div>
+      <div class="toast-message">Action completed successfully</div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/utils.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
